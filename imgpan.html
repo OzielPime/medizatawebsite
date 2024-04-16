@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .panorama-container {
+            width: 400px; /* Largura da área de visualização */
+            height: 500px; /* Altura da área de visualização */
+            overflow: hidden; /* Desativar barras de rolagem */
+            cursor: grab; /* Altera o cursor para uma "mão" durante o arraste */
+        }
+
+        .panorama-container:active {
+            cursor: grabbing; /* Altera o cursor para uma "mão fechada" quando arrastado ativamente */
+        }
+
+        .panorama-image {
+            height: 500px; /* Altura da imagem panorâmica */
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="panorama-container">
+        <img class="panorama-image" src="imgpan.jpg" alt="Imagem Panorâmica">
+    </div>
+    <script>
+        const panoramaContainer = document.querySelector('.panorama-container');
+        let isDragging = false;
+        let startPositionX = 0;
+
+        panoramaContainer.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startPositionX = e.clientX - panoramaContainer.scrollLeft;
+        });
+
+        panoramaContainer.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        panoramaContainer.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const scrollX = e.clientX - startPositionX;
+            panoramaContainer.scrollLeft = scrollX;
+        });
+    </script>
+</body>
+</html>
